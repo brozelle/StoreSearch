@@ -19,6 +19,8 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchBar.becomeFirstResponder()
 
         //Moves the search bar to clear the status bar 20 + 44.
         tableView.contentInset = UIEdgeInsets(top: 64, left: 0,
