@@ -39,6 +39,51 @@ class SearchViewController: UIViewController {
             static let nothingFoundCell = "NothingFoundCell"
         }
     }
+    
+    //MARK:- Helper Methods
+    func iTunesURL(searchText: String) -> URL {
+        let encodedText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let urlString = String(format: "https://itunes.apple.com/search?term=%@", encodedText)
+        let url = URL(string: urlString)
+        return url!
+    }
+     //Search request
+    func performSearchRequest(with url: URL) -> Data? {
+        do {
+            return try Data(contentsOf: url)
+        } catch {
+            print("Download Error: \(error.localizedDescription)")
+            showNetworkError()
+            return nil
+        }
+    }
+    
+    func parse(data: Data) -> [SearchResult] {
+        do {
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(ResultArray.self, from: data)
+            return result.results
+        } catch {
+            print("JSON Error: \(error)")
+            return []
+        }
+    }
+    
+    //Error Handling
+    func showNetworkError() {
+        let alert = UIAlertController(title: "Whoops...",
+                                      message: "There was an error accessing the iTunes Store." + "Please try again.",
+                                      preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "OK",
+                                   style: .default,
+                                   handler: nil)
+            
+            alert.addAction(action)
+        present(alert, animated: true,
+                completion: nil)
+        
+    }
 }
 
 //Search Bar Delegate
@@ -50,21 +95,28 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        searchResults = []
-        if searchBar.text != "justin bieber" {
-        for i in 0...2 {
-            let searchResult = SearchResult()
-            searchResult.name = String(format: "Fake Result %d for", i)
-            searchResult.artistName = searchBar.text!
-            searchResults.append(searchResult)
-            }
-        }
+        
         hasSearched = true
+        searchResults = []
+
+        let url = iTunesURL(searchText: searchBar.text!)
+        print("URL: '\(url)'")
+             
+        if let data = performSearchRequest(with: url) {
+            /*let results = parse(data: data)
+            print("Got results '\(results)'")*/
+            searchResults = parse(data: data)
+        }
+        /*searchResults.sort(by: {result1, result2 in
+            return result1.name.localizedStandardCompare(
+                result2.name) == .orderedAscending})*/
+        //searchResults.sort { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+        searchResults.sort (by: <)
         tableView.reloadData()
     }
 }
 
-//TableView delegate stuff
+//MARK:- TableView delegate stuff
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
@@ -87,9 +139,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.searchResultCell,
                                                      for: indexPath) as! SearchResultCell
+            
             let searchResult = searchResults[indexPath.row]
             cell.nameLabel.text = searchResult.name
-            cell.artistNameLabel.text = searchResult.artistName
+            
+            //cell.artistNameLabel.text = searchResult.artistName
+            if searchResult.artist.isEmpty {
+                cell.artistNameLabel.text = "Unknown"
+            } else {
+                cell.artistNameLabel.text = String (format: "%@ (%@)", searchResult.artist, searchResult.type)
+            }
             return cell
         }
     }
