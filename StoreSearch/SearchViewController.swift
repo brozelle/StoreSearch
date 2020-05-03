@@ -16,6 +16,7 @@ class SearchViewController: UIViewController {
     var searchResults = [SearchResult]()
     var hasSearched = false
     var isLoading = false
+    var dataTask: URLSessionDataTask?
     
     
     override func viewDidLoad() {
@@ -58,16 +59,6 @@ class SearchViewController: UIViewController {
         let url = URL(string: urlString)
         return url!
     }
-     //Search request
-    /*func performStoreRequest(with url: URL) -> Data? {
-        do {
-            return try Data(contentsOf: url)
-        } catch {
-            print("Download Error: \(error.localizedDescription)")
-            showNetworkError()
-            return nil
-        }
-    }*/
     
     func parse(data: Data) -> [SearchResult] {
         do {
@@ -109,6 +100,7 @@ extension SearchViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         
         isLoading = true
+        dataTask?.cancel()
         
         tableView.reloadData()
         
@@ -122,13 +114,13 @@ extension SearchViewController: UISearchBarDelegate {
         let session = URLSession.shared
         
         // Create a data task.
-        let dataTask = session.dataTask(with: url, completionHandler: {
+        dataTask = session.dataTask(with: url, completionHandler: {
             data, response, error in
         
-            if let error = error {
+            if let error = error as NSError?, error.code == -999 {
                 print("Failure! \(error.localizedDescription)")
+                return //Search was cancelled
             } else if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                //print("Success! \(data!)")
                 if let data = data {
                     self.searchResults = self.parse(data: data)
                     self.searchResults.sort(by: <)
@@ -150,7 +142,7 @@ extension SearchViewController: UISearchBarDelegate {
             }
         })
         //Start the data task.
-        dataTask.resume()
+        dataTask?.resume()
     }
 }
 
