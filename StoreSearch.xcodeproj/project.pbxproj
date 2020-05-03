@@ -16,7 +16,8 @@
 		5DB85795245DC69300EFA543 /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DB85794245DC69300EFA543 /* SearchResultCell.xib */; };
 		5DB85797245DCDBA00EFA543 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB85796245DCDBA00EFA543 /* SearchResultCell.swift */; };
 		5DB85799245DD51B00EFA543 /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DB85798245DD51B00EFA543 /* NothingFoundCell.xib */; };
-		5DB8579D245E557A00EFA543 /* loadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DB8579C245E557A00EFA543 /* loadingCell.xib */; };
+		5DB8579D245E557A00EFA543 /* ~loadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DB8579C245E557A00EFA543 /* ~loadingCell.xib */; };
+		5DB8579F245F202F00EFA543 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DB8579E245F202F00EFA543 /* LoadingCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +32,8 @@
 		5DB85794245DC69300EFA543 /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
 		5DB85796245DCDBA00EFA543 /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		5DB85798245DD51B00EFA543 /* NothingFoundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
-		5DB8579C245E557A00EFA543 /* loadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = loadingCell.xib; sourceTree = "<group>"; };
+		5DB8579C245E557A00EFA543 /* ~loadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "~loadingCell.xib"; sourceTree = "<group>"; };
+		5DB8579E245F202F00EFA543 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoadingCell.xib; path = "../../../../iOS_Apprentice_v7/store-search/Source Code/35-Asynchronous Networking/chapter-35-final/StoreSearch/LoadingCell.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		5DB8577F245D069600EFA543 /* StoreSearch */ = {
 			isa = PBXGroup;
 			children = (
+				5DB8579E245F202F00EFA543 /* LoadingCell.xib */,
 				5DB85780245D069600EFA543 /* AppDelegate.swift */,
 				5DB85787245D069700EFA543 /* Assets.xcassets */,
 				5DB8578C245D069800EFA543 /* Info.plist */,
@@ -74,7 +77,7 @@
 				5DB85794245DC69300EFA543 /* SearchResultCell.xib */,
 				5DB85796245DCDBA00EFA543 /* SearchResultCell.swift */,
 				5DB85782245D069600EFA543 /* SearchViewController.swift */,
-				5DB8579C245E557A00EFA543 /* loadingCell.xib */,
+				5DB8579C245E557A00EFA543 /* ~loadingCell.xib */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
@@ -137,7 +140,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DB8579D245E557A00EFA543 /* loadingCell.xib in Resources */,
+				5DB8579F245F202F00EFA543 /* LoadingCell.xib in Resources */,
+				5DB8579D245E557A00EFA543 /* ~loadingCell.xib in Resources */,
 				5DB8578B245D069800EFA543 /* LaunchScreen.storyboard in Resources */,
 				5DB85788245D069700EFA543 /* Assets.xcassets in Resources */,
 				5DB85795245DC69300EFA543 /* SearchResultCell.xib in Resources */,

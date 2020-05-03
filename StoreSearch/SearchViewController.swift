@@ -59,7 +59,7 @@ class SearchViewController: UIViewController {
         return url!
     }
      //Search request
-    func performSearchRequest(with url: URL) -> Data? {
+    func performStoreRequest(with url: URL) -> Data? {
         do {
             return try Data(contentsOf: url)
         } catch {
@@ -105,24 +105,34 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         searchBar.resignFirstResponder()
         
         isLoading = true
+        
         tableView.reloadData()
         
         hasSearched = true
         searchResults = []
-
-        let url = iTunesURL(searchText: searchBar.text!)
-        print("URL: '\(url)'")
-             
-        if let data = performSearchRequest(with: url) {
-            searchResults = parse(data: data)
-        }
         
-        searchResults.sort (by: <)
-        isLoading = false
-        tableView.reloadData()
+        // Gets a reference to the queue
+        let queue = DispatchQueue.global()
+        let url = self.iTunesURL(searchText: searchBar.text!)
+        
+        // Dispatch a closure on it
+        queue.async {
+            if let data = self.performStoreRequest(with: url) {
+                self.searchResults = self.parse(data: data)
+                self.searchResults.sort(by: <)
+                
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.tableView.reloadData()
+                }
+                return
+            }
+        }
+
     }
 }
 
@@ -145,11 +155,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell,
-                                                     for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
             
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
-            
             spinner.startAnimating()
             return cell
             
