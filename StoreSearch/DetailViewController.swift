@@ -49,7 +49,7 @@ class DetailViewController: UIViewController {
             updateUI()
         }
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.clear
     }
     
     //MARK:- Actions
@@ -128,7 +128,19 @@ extension DetailViewController: UIViewControllerTransitioningDelegate {
         return DimmingPresentationController (presentedViewController: presented,
                                               presenting: presenting)
         }
-}
+    
+    func animationController(forPresented presented: UIViewController,
+                             presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return BounceAnimationController()
+    }
+    
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return SlideOutAnimationController()
+    }
+    
+    }
 
 extension DetailViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,

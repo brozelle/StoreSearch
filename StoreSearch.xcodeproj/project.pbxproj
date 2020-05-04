@@ -10,6 +10,9 @@
 		5D2CDB13245F9AB400731DA4 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2CDB12245F9AB400731DA4 /* UIImageView+DownloadImage.swift */; };
 		5D52D75C245FBE15003CB82F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52D75B245FBE15003CB82F /* DetailViewController.swift */; };
 		5D52D75E24606BA6003CB82F /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52D75D24606BA6003CB82F /* DimmingPresentationController.swift */; };
+		5D52D7602460AF05003CB82F /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52D75F2460AF05003CB82F /* GradientView.swift */; };
+		5D52D7622460B53C003CB82F /* BounceAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52D7612460B53C003CB82F /* BounceAnimationController.swift */; };
+		5D52D7642460B8E4003CB82F /* SlideOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D52D7632460B8E4003CB82F /* SlideOutAnimationController.swift */; };
 		5DB85781245D069600EFA543 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB85780245D069600EFA543 /* AppDelegate.swift */; };
 		5DB85783245D069600EFA543 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB85782245D069600EFA543 /* SearchViewController.swift */; };
 		5DB85786245D069600EFA543 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5DB85784245D069600EFA543 /* Main.storyboard */; };
@@ -25,6 +28,9 @@
 		5D2CDB12245F9AB400731DA4 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
 		5D52D75B245FBE15003CB82F /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5D52D75D24606BA6003CB82F /* DimmingPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
+		5D52D75F2460AF05003CB82F /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		5D52D7612460B53C003CB82F /* BounceAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BounceAnimationController.swift; sourceTree = "<group>"; };
+		5D52D7632460B8E4003CB82F /* SlideOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOutAnimationController.swift; sourceTree = "<group>"; };
 		5DB8577D245D069600EFA543 /* StoreSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DB85780245D069600EFA543 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5DB85782245D069600EFA543 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +87,9 @@
 				5D2CDB12245F9AB400731DA4 /* UIImageView+DownloadImage.swift */,
 				5D52D75B245FBE15003CB82F /* DetailViewController.swift */,
 				5D52D75D24606BA6003CB82F /* DimmingPresentationController.swift */,
+				5D52D75F2460AF05003CB82F /* GradientView.swift */,
+				5D52D7612460B53C003CB82F /* BounceAnimationController.swift */,
+				5D52D7632460B8E4003CB82F /* SlideOutAnimationController.swift */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
@@ -162,9 +171,12 @@
 				5D52D75E24606BA6003CB82F /* DimmingPresentationController.swift in Sources */,
 				5DB85793245D1E9900EFA543 /* SearchResult.swift in Sources */,
 				5DB85797245DCDBA00EFA543 /* SearchResultCell.swift in Sources */,
+				5D52D7622460B53C003CB82F /* BounceAnimationController.swift in Sources */,
 				5D52D75C245FBE15003CB82F /* DetailViewController.swift in Sources */,
 				5DB85781245D069600EFA543 /* AppDelegate.swift in Sources */,
+				5D52D7602460AF05003CB82F /* GradientView.swift in Sources */,
 				5D2CDB13245F9AB400731DA4 /* UIImageView+DownloadImage.swift in Sources */,
+				5D52D7642460B8E4003CB82F /* SlideOutAnimationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
