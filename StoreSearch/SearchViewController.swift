@@ -12,15 +12,6 @@ class SearchViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    /*@IBOutlet weak var segmentedControl: UISegmentedControl! {
-        print("Segment changed: \(sender.selectedSegmentIndex)")
-    }*/
-    /*@IBOutlet weak var segmentedControl: UISegmentedControl!
-    
-    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
-         print("Segment changed: \(sender.selectedSegmentIndex)")
-    }*/
-    
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     @IBAction func segmentedChange(_ sender: UISegmentedControl) {
@@ -40,8 +31,10 @@ class SearchViewController: UIViewController {
         searchBar.becomeFirstResponder()
 
         //Moves the search bar to clear the status bar 20 + 44.
-        tableView.contentInset = UIEdgeInsets(top: 108, left: 0,
-                                              bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 108,
+                                              left: 0,
+                                              bottom: 0,
+                                              right: 0)
         
         var cellNib = UINib(nibName: TableView.CellIdentifiers.searchResultCell,
                             bundle: nil)
@@ -113,6 +106,17 @@ class SearchViewController: UIViewController {
                 completion: nil)
         
     }
+    
+    //MARK:- Navigation
+    //Finds the SearchResult object and passes it to DetailViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetail" {
+            let detailViewController = segue.destination as! DetailViewController
+            let indexPath = sender as! IndexPath
+            let searchResult = searchResults[indexPath.row]
+            detailViewController.searchResult = searchResult
+        }
+    }
 }
 
 //Search Bar Delegate
@@ -142,7 +146,8 @@ extension SearchViewController: UISearchBarDelegate {
         let session = URLSession.shared
         
         // Create a data task.
-        dataTask = session.dataTask(with: url, completionHandler: {
+        dataTask = session.dataTask(with: url,
+                                    completionHandler: {
             data, response, error in
         
             if let error = error as NSError?, error.code == -999 {
@@ -194,7 +199,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if isLoading {
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell,
+                                                     for: indexPath)
             
             let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
             spinner.startAnimating()
@@ -208,26 +214,20 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                                                      for: indexPath) as! SearchResultCell
             
             let searchResult = searchResults[indexPath.row]
-            
-            /*cell.nameLabel.text = searchResult.name
-            
-            //cell.artistNameLabel.text = searchResult.artistName
-            if searchResult.artist.isEmpty {
-                cell.artistNameLabel.text = "Unknown"
-            } else {
-                cell.artistNameLabel.text = String (format: "%@ (%@)", searchResult.artist, searchResult.type)
-            }
-            return cell*/
             cell.configure(for: searchResult)
             return cell
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath,
+                              animated: true)
+        performSegue(withIdentifier: "ShowDetail",
+                     sender: indexPath)
     }
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    func tableView(_ tableView: UITableView,
+                   willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if searchResults.count == 0 || isLoading {
             return nil
         } else {
