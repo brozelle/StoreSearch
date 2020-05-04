@@ -192,6 +192,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if isLoading {
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.loadingCell, for: indexPath)
             
@@ -207,7 +208,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                                                      for: indexPath) as! SearchResultCell
             
             let searchResult = searchResults[indexPath.row]
-            cell.nameLabel.text = searchResult.name
+            
+            /*cell.nameLabel.text = searchResult.name
             
             //cell.artistNameLabel.text = searchResult.artistName
             if searchResult.artist.isEmpty {
@@ -215,6 +217,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell.artistNameLabel.text = String (format: "%@ (%@)", searchResult.artist, searchResult.type)
             }
+            return cell*/
+            cell.configure(for: searchResult)
             return cell
         }
     }
