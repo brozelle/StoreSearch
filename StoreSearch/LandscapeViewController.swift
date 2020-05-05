@@ -12,6 +12,7 @@ class LandscapeViewController: UIViewController {
     
     var searchResults = [SearchResult]()
     private var firstTime = true
+    private var downloads = [URLSessionTask]()
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl:  UIPageControl!
@@ -26,7 +27,15 @@ class LandscapeViewController: UIViewController {
                                                      y: 0) },
                        completion: nil)
     }
-
+    
+    //cancels any downloads that are on the way.
+    deinit {
+        print("deinit\(self)")
+        for task in downloads {
+            task.cancel()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Remove constraints from main view
@@ -105,8 +114,7 @@ class LandscapeViewController: UIViewController {
             break
         }
         
-        // more here later.
-        // Button size
+       // Button size
         let buttonWidth: CGFloat = 82
         let buttonHeight: CGFloat = 82
         let paddingHorz = (itemWidth - buttonWidth)/2
@@ -116,11 +124,13 @@ class LandscapeViewController: UIViewController {
         var row = 0
         var column = 0
         var x = marginX
-        for (index, result) in searchResults.enumerated() {
+        for (_, result) in searchResults.enumerated() {
             //create button object
-            let button = UIButton(type: .system)
-            button.backgroundColor = UIColor.white
-            button.setTitle("\(index)", for: .normal)
+            let button = UIButton(type: .custom)
+            downloadImage(for: result, andPlaceOn: button)
+            /*button.backgroundColor = UIColor.white
+            button.setTitle("\(index)", for: .normal)*/
+            button.setBackgroundImage(UIImage(named: "LandscapeButton"), for: .normal)
             
             //set button frame
             button.frame = CGRect(x: x + paddingHorz,
@@ -149,6 +159,26 @@ class LandscapeViewController: UIViewController {
         
         pageControl.numberOfPages = numPages
         pageControl.currentPage = 0
+    }
+    
+    private func downloadImage(for searchResult: SearchResult, andPlaceOn button: UIButton) {
+        if let url = URL(string: searchResult.imageSmall) {
+            let task = URLSession.shared.downloadTask(with: url) {
+                [weak button] url, response, error in
+                
+                if error == nil, let url = url,
+                    let data = try? Data(contentsOf: url),
+                    let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        if let button = button {
+                            button.setImage(image, for: .normal)
+                        }
+                    }
+                }
+            }
+            task.resume()
+            downloads.append(task)
+        }
     }
     
 
