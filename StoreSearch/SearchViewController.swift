@@ -23,6 +23,7 @@ class SearchViewController: UIViewController {
     var hasSearched = false
     var isLoading = false
     var dataTask: URLSessionDataTask?
+    var landscapeVC: LandscapeViewController?
     
     
     override func viewDidLoad() {
@@ -106,6 +107,64 @@ class SearchViewController: UIViewController {
                 completion: nil)
         
     }
+    
+    override func willTransition(to newCollection: UITraitCollection,
+                                 with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        //detect rotation
+        switch newCollection.verticalSizeClass {
+        case .compact:
+            showLandscape(with: coordinator)
+        case .regular, .unspecified: hideLandscape(with: coordinator)
+        }
+    }
+    
+    func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        
+        // if you are already looking at landscape, then return right away.
+        guard landscapeVC == nil else { return }
+        
+        // find the LandscapeViewController ID and instantiate it manually.
+        landscapeVC = storyboard!.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
+        if let controller = landscapeVC {
+             //sets the size and postion of the new view controller.
+            controller.view.frame = view.bounds
+            //animation
+            controller.view.alpha = 0
+            
+            // required to add the contents of one VC to an other.
+            view.addSubview(controller.view)
+            addChild(controller)
+            //animation from transparent to fade in.
+            coordinator.animate(alongsideTransition: { _ in controller.view.alpha = 1
+                self.searchBar.resignFirstResponder()
+                }, completion: { _ in controller.didMove(toParent: self)
+                    //makes the detail screen go away if it is open when rotating.
+                    if self.presentedViewController != nil {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+            })
+        }
+    }
+    
+    //Back to portrait view.
+    func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        if let controller = landscapeVC {
+            controller.willMove(toParent: nil)
+            
+            //animation back from landscape
+            coordinator.animate(alongsideTransition: { _ in
+                controller.view.alpha = 0
+            }, completion: { _ in
+                controller.view.removeFromSuperview()
+                controller.removeFromParent()
+                self.landscapeVC = nil
+            })
+        }
+    }
+    
+    
     
     //MARK:- Navigation
     //Finds the SearchResult object and passes it to DetailViewController
