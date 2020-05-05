@@ -128,6 +128,10 @@ class SearchViewController: UIViewController {
         // find the LandscapeViewController ID and instantiate it manually.
         landscapeVC = storyboard!.instantiateViewController(withIdentifier: "LandscapeViewController") as? LandscapeViewController
         if let controller = landscapeVC {
+            
+            //passing the search results to the landscapeVC
+            controller.searchResults = searchResults
+            
              //sets the size and postion of the new view controller.
             controller.view.frame = view.bounds
             //animation
