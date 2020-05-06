@@ -132,6 +132,9 @@ class SearchViewController: UIViewController {
             //animation back from landscape
             coordinator.animate(alongsideTransition: { _ in
                 controller.view.alpha = 0
+                if self.presentedViewController != nil {
+                    self.dismiss(animated: true, completion: nil)
+                }
             }, completion: { _ in
                 controller.view.removeFromSuperview()
                 controller.removeFromParent()
@@ -173,7 +176,8 @@ extension SearchViewController: UISearchBarDelegate {
                                     self.showNetworkError()
                                 }
                                 self.tableView.reloadData()
-       })
+                self.landscapeVC?.searchResultsReceived()
+            })
         tableView.reloadData()
         searchBar.resignFirstResponder()
     }
