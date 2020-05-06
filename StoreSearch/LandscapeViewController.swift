@@ -64,11 +64,19 @@ class LandscapeViewController: UIViewController {
                                    y: safeFrame.size.height - pageControl.frame.size.height,
                                    width: safeFrame.size.width,
                                    height: pageControl.frame.size.height)
-        
         if firstTime {
             firstTime = false
-            tileButtons(search.searchResults)
-        }
+            switch search.state {
+            case .notSearchedYet:
+                break
+            case .loading:
+                break
+            case .noResults:
+                break
+            case .results(let list):
+                tileButtons(list)
+            }
+    }
     }
     
     // MARK:- Private methods
@@ -132,7 +140,8 @@ class LandscapeViewController: UIViewController {
             downloadImage(for: result, andPlaceOn: button)
             /*button.backgroundColor = UIColor.white
             button.setTitle("\(index)", for: .normal)*/
-            button.setBackgroundImage(UIImage(named: "LandscapeButton"), for: .normal)
+            button.setBackgroundImage(UIImage(named: "LandscapeButton"),
+                                      for: .normal)
             
             //set button frame
             button.frame = CGRect(x: x + paddingHorz,

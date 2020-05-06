@@ -92,13 +92,13 @@
 				5DB8579E245F202F00EFA543 /* LoadingCell.xib */,
 				5DB85784245D069600EFA543 /* Main.storyboard */,
 				5DB85798245DD51B00EFA543 /* NothingFoundCell.xib */,
+				5D52D7692461E68B003CB82F /* Search.swift */,
 				5DB85792245D1E9900EFA543 /* SearchResult.swift */,
 				5DB85794245DC69300EFA543 /* SearchResultCell.xib */,
 				5DB85796245DCDBA00EFA543 /* SearchResultCell.swift */,
 				5DB85782245D069600EFA543 /* SearchViewController.swift */,
 				5D52D7632460B8E4003CB82F /* SlideOutAnimationController.swift */,
 				5D2CDB12245F9AB400731DA4 /* UIImageView+DownloadImage.swift */,
-				5D52D7692461E68B003CB82F /* Search.swift */,
 			);
 			path = StoreSearch;
 			sourceTree = "<group>";
